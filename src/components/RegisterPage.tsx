@@ -93,6 +93,14 @@ export function RegisterPage() {
       >
         Sign Up
       </h1>
+      <video
+        className={styles.video}
+        muted
+        playsInline
+        style={{ width: "100%", height: "100%" }}
+      >
+        <source src="/todo.mp4" type="video/mp4"></source>
+      </video>
       <Box sx={{ display: "flex", flexDirection: "column" }}>
         <TextField
           label="Firstname"
