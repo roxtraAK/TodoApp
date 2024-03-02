@@ -1,5 +1,5 @@
 import { useState } from "react";
-import styles from "../index.module.css";
+import styles from "../styles/index.module.css";
 import { FaEdit } from "react-icons/fa";
 import { TiDeleteOutline } from "react-icons/ti";
 import Counter from "./Counter";

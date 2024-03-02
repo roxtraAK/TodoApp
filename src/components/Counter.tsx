@@ -1,6 +1,5 @@
-import React from "react";
 import Bell from "../img/bell.png";
-import styles from "../index.module.css";
+import styles from "../styles/index.module.css";
 
 interface Counter {
   todos: number;

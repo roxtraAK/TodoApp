@@ -13,7 +13,7 @@ app.use(cors())
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.post("/register", (req, res) => {
+app.post("/users", (req, res) => {
   const {firstname, lastname, email, phonenumber, username, password } = req.body;
 
   if (!username || !password) {
@@ -29,6 +29,28 @@ app.post("/register", (req, res) => {
       res.status(500).json({ error: 'Internal Server Error' });
     });
 });
+
+app.post("/auth", (req, res) => {
+  const { username, password } = req.body;
+
+  if (!username || !password) {
+    return res.status(400).json({ error: 'Username and password are required' });
+  }
+
+  db.oneOrNone('SELECT username, password FROM users WHERE username = $1 AND password = $2', [username, password])
+    .then((user) => {
+      if (user) {
+        res.status(200).json({ message: 'User found', user });
+      } else {
+        res.status(404).json({ message: 'User not found' });
+      }
+    })
+    .catch((error) => {
+      console.error('Error searching for user:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    });
+});
+
 
 
 app.listen(3000, () => {

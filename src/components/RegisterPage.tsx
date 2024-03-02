@@ -1,7 +1,8 @@
 import { Box, Button, SxProps, TextField, Theme } from "@mui/material";
 import axios from "axios";
-import styles from "../register.module.css";
+import styles from "../styles/register.module.css";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const sxPropsContent: SxProps<Theme> = {
   display: "flex",
@@ -23,6 +24,7 @@ export function RegisterPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const navigate = useNavigate();
 
   const handleFirstnameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFirstname(e.target.value);
@@ -57,6 +59,8 @@ export function RegisterPage() {
   const onRegister = () => {
     if (!password || !confirmPassword) {
       console.error("Password and Confirm Password cannot be empty");
+      alert("Password and Confirm Password cannot be empty");
+
       return;
     }
 
@@ -80,6 +84,9 @@ export function RegisterPage() {
       .catch((error) => {
         console.error("Error adding new user:", error.response.data);
       });
+
+    const path = "/";
+    navigate(path);
   };
 
   return (
@@ -138,12 +145,14 @@ export function RegisterPage() {
           onChange={handlePasswordChange}
           value={password}
           variant="standard"
+          type="password"
         />
         <TextField
           label="Confirm Password"
           value={confirmPassword}
           onChange={handleConfirmPasswordChange}
           variant="standard"
+          type="password"
         />
       </Box>
       <Box sx={{ marginTop: 5 }}>

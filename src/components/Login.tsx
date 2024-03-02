@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import styles from "../login.module.css";
+import styles from "../styles/login.module.css";
 import Box from "@mui/material/Box";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
@@ -23,9 +23,15 @@ export function Login() {
   const handleLogin = () => {
     if (password.length < 5 || username.length < 5) {
       alert("Username or password is too short");
-    } else {
-      navigate("/todos");
+      return;
     }
+    console.log(fetch("http://localhost:3000/users"));
+    // navigate("/todos");
+  };
+
+  const NavigateToRegisterPage = () => {
+    const path = "/register";
+    navigate(path);
   };
 
   const showPassword = () => {
@@ -47,7 +53,7 @@ export function Login() {
         <source src="/todo.mp4" type="video/mp4"></source>
       </video>
       <Box className={styles.header}>
-        <h1 style={{ fontSize: 40 }} title="Login">
+        <h1 style={{ fontSize: 40, color: "#1565C0" }} title="Login">
           Login
         </h1>
       </Box>
@@ -79,7 +85,11 @@ export function Login() {
           <Button onClick={handleLogin} color="primary" variant="contained">
             Login
           </Button>
-          <Button color="primary" variant="contained">
+          <Button
+            color="primary"
+            onClick={() => NavigateToRegisterPage()}
+            variant="contained"
+          >
             Registrieren
           </Button>
         </Box>
