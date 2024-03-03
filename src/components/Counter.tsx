@@ -1,6 +1,6 @@
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import styles from "../styles/todos.module.css";
-import { Box } from "@mui/material";
+import { Box, Tooltip } from "@mui/material";
+import Badge from "@mui/material/Badge";
 
 interface Counter {
   todos: number;
@@ -9,13 +9,17 @@ interface Counter {
 export default function Counter(props: Counter) {
   return (
     <>
-      <Box className={styles.CounterImg}>
-        <NotificationsIcon
-          fontSize="medium"
-          sx={{ color: "#ffffff", marginRight: 0.5 }}
-        />
+      <Box>
+        <Badge
+          badgeContent={props.todos}
+          color="primary"
+          sx={{ marginRight: 1 }}
+        >
+          <Tooltip title="Todos">
+            <NotificationsIcon fontSize="medium" sx={{ color: "#ffffff" }} />
+          </Tooltip>
+        </Badge>
       </Box>
-      <Box className={styles.CounterNumber}>{props.todos}</Box>
     </>
   );
 }

@@ -1,7 +1,8 @@
-import { Box, Button, SxProps, TextField, Theme } from "@mui/material";
+import { Alert, Box, Button, SxProps, TextField, Theme } from "@mui/material";
 import axios from "axios";
 import styles from "../styles/register.module.css";
 import { useState } from "react";
+import CheckIcon from "@mui/icons-material/Check";
 import { useNavigate } from "react-router-dom";
 
 const sxPropsContent: SxProps<Theme> = {
@@ -59,8 +60,9 @@ export function RegisterPage() {
   const onRegister = () => {
     if (!password || !confirmPassword) {
       console.error("Password and Confirm Password cannot be empty");
-      alert("Password and Confirm Password cannot be empty");
-
+      <Alert icon={<CheckIcon fontSize="inherit" />} severity="error">
+        Password and Confirm Password cannot be empty
+      </Alert>;
       return;
     }
 
@@ -85,8 +87,13 @@ export function RegisterPage() {
         console.error("Error adding new user:", error.response.data);
       });
 
-    const path = "/";
-    navigate(path);
+    <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
+      Registration was successful.
+    </Alert>;
+
+    setTimeout(function () {
+      navigate("/");
+    }, 2000);
   };
 
   return (

@@ -98,13 +98,6 @@
     background: #161a2b;
   }
   
-  .CounterNumber{
-    margin-left: -5px;
-    margin-top: 28px;
-    color: rgb(255, 255, 255);
-    font-size: 15px;
-  }
-  
   .MainContent{
    display: flex;
     flex-direction: column;
@@ -120,12 +113,13 @@
   .Header {
     display: flex;
     align-items: center;
-    margin-right: 20px;
+    margin-bottom: 10px;
   }
   
   .MiddleContent {
     flex-grow: 1;
     text-align: center; 
+    
   }
   
   .icons{

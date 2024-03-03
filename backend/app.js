@@ -1,12 +1,10 @@
 var express = require("express")
-
 var pgp = require("pg-promise")(/*options*/);
 var db = pgp("postgres://postgres:admin@localhost:5432/Todo");
-
-const port = 3000
-
 var cors = require('cors')
 const bodyParser = require('body-parser');
+
+const port = 3000
 const app = express();
 
 app.use(cors())

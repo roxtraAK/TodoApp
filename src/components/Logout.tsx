@@ -1,15 +1,17 @@
-import styles from "../styles/logout.module.css";
+import { Box, Tooltip } from "@mui/material";
 import LogoutIcon from "@mui/icons-material/Logout";
 
 export function Logout() {
   return (
     <>
-      <div className={styles.LogoutImg}>
-        <LogoutIcon
-          fontSize="medium"
-          sx={{ color: "#ffffff", cursor: "pointer" }}
-        />
-      </div>
+      <Box>
+        <Tooltip title="Logout">
+          <LogoutIcon
+            fontSize="medium"
+            sx={{ color: "#ffffff", cursor: "pointer" }}
+          />
+        </Tooltip>
+      </Box>
     </>
   );
 }

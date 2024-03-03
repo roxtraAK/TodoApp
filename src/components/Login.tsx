@@ -22,10 +22,13 @@ export function Login() {
   };
 
   const handleLogin = () => {
-    if (password.length < 5) {
-      alert("password is too short");
-      return;
-    }
+    const user = {
+      user: username,
+      password: password,
+    };
+
+    let serializedObj = JSON.stringify(user);
+
     axios
       .post("http://localhost:3000/auth", {
         username,
@@ -33,12 +36,23 @@ export function Login() {
       })
       .then((response) => {
         console.log("logged in successfully:", response.data);
+
+        // save user in local storage
+        localStorage.setItem("user", serializedObj);
+
+        navigate("/todos");
       })
       .catch((error) => {
         console.error("user not found:", error.response.data);
+        alert("User not found");
+        return;
       });
-    console.log();
-    navigate("/todos");
+  };
+
+  const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      handleLogin();
+    }
   };
 
   const NavigateToRegisterPage = () => {
@@ -90,6 +104,7 @@ export function Login() {
             onChange={handlePasswordChange}
             type="password"
             variant="standard"
+            onKeyPress={handleKeyPress}
           ></TextField>
           <VisibilityIcon color="action" onClick={() => showPassword()} />
         </Box>
