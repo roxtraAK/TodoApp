@@ -5,6 +5,7 @@ import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export function Login() {
   const [username, setUsername] = useState("");
@@ -21,12 +22,23 @@ export function Login() {
   };
 
   const handleLogin = () => {
-    if (password.length < 5 || username.length < 5) {
-      alert("Username or password is too short");
+    if (password.length < 5) {
+      alert("password is too short");
       return;
     }
-    console.log(fetch("http://localhost:3000/users"));
-    // navigate("/todos");
+    axios
+      .post("http://localhost:3000/auth", {
+        username,
+        password,
+      })
+      .then((response) => {
+        console.log("logged in successfully:", response.data);
+      })
+      .catch((error) => {
+        console.error("user not found:", error.response.data);
+      });
+    console.log();
+    navigate("/todos");
   };
 
   const NavigateToRegisterPage = () => {

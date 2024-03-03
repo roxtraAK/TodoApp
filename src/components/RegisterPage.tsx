@@ -70,7 +70,7 @@ export function RegisterPage() {
     }
 
     axios
-      .post("http://localhost:3000/register", {
+      .post("http://localhost:3000/users", {
         firstname: firstname,
         lastname: lastname,
         email: email,

@@ -32,9 +32,9 @@ app.post("/users", (req, res) => {
 
 app.post("/auth", (req, res) => {
   const { username, password } = req.body;
-
+  console.log(req.body);
   if (!username || !password) {
-    return res.status(400).json({ error: 'Username and password are required' });
+    return res.status(400).json({ error: 'username and password are required' });
   }
 
   db.oneOrNone('SELECT username, password FROM users WHERE username = $1 AND password = $2', [username, password])
@@ -46,7 +46,7 @@ app.post("/auth", (req, res) => {
       }
     })
     .catch((error) => {
-      console.error('Error searching for user:', error);
+      console.error('error searching for user:', error);
       res.status(500).json({ error: 'Internal Server Error' });
     });
 });

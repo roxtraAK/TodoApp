@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { List } from "./components/List";
+import { Todo } from "./components/Todo";
 import { Login } from "./components/Login";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import React from "react";
@@ -36,7 +36,7 @@ export default function App() {
     {
       path: "/todos",
       element: (
-        <List addTodo={addTodo} deleteTodo={deleteLastTodo} todos={todos} />
+        <Todo addTodo={addTodo} deleteTodo={deleteLastTodo} todos={todos} />
       ),
     },
   ]);
