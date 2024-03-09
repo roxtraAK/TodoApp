@@ -1,15 +1,16 @@
 import { useState } from "react";
 import { Todo } from "./components/Todo";
 import { Login } from "./components/Login";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import React from "react";
 import { RegisterPage } from "./components/RegisterPage";
+import { Usermanagement } from "./components/Usermanagement";
 
 export default function App() {
   const [todos, setTodo] = useState<string[]>([]);
 
   const addTodo = (text: string) => {
-    if (text == "") {
+    if (text === "") {
       alert("Gebe einen Text ein");
     } else {
       setTodo((prevTodos) => [...prevTodos, text]);
@@ -24,26 +25,19 @@ export default function App() {
     });
   };
 
-  const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <Login />,
-    },
-    {
-      path: "/register",
-      element: <RegisterPage />,
-    },
-    {
-      path: "/todos",
-      element: (
-        <Todo addTodo={addTodo} deleteTodo={deleteLastTodo} todos={todos} />
-      ),
-    },
-  ]);
-
   return (
-    <React.StrictMode>
-      <RouterProvider router={router}></RouterProvider>
-    </React.StrictMode>
+    <Router>
+      <Routes>
+        <Route path="/" element={<Login />} />
+        <Route path="/register" element={<RegisterPage />} />
+        <Route
+          path="/todos"
+          element={
+            <Todo addTodo={addTodo} deleteTodo={deleteLastTodo} todos={todos} />
+          }
+        />
+        <Route path="/account" element={<Usermanagement />} />
+      </Routes>
+    </Router>
   );
 }

@@ -1,4 +1,5 @@
 var express = require("express")
+const path = require('path');
 var pgp = require("pg-promise")(/*options*/);
 var db = pgp("postgres://postgres:admin@localhost:5432/Todo");
 var cors = require('cors')
@@ -14,6 +15,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.post("/users", (req, res) => {
   const {firstname, lastname, email, phonenumber, username, password } = req.body;
 
+  //TODO: hash password
+
   if (!username || !password) {
     return res.status(400).json({ error: 'Username and password are required' });
   }
@@ -28,8 +31,8 @@ app.post("/users", (req, res) => {
     });
 });
 
-app.post("/auth", (req, res) => {
-  const { username, password } = req.body;
+app.get("/users", (req, res) => {
+  const { username, password } = req.query;
   console.log(req.body);
   if (!username || !password) {
     return res.status(400).json({ error: 'username and password are required' });
@@ -48,6 +51,7 @@ app.post("/auth", (req, res) => {
       res.status(500).json({ error: 'Internal Server Error' });
     });
 });
+
 
 
 

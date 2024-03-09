@@ -6,7 +6,7 @@ import Counter from "./Counter";
 import { Logout } from "./Logout";
 import { Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { AccountManagement } from "./Account";
+import { Avatar } from "./Avatar";
 
 export function Todo({ addTodo, todos, deleteTodo, editTodo }: any) {
   const [input, setInput] = useState<string>("");
@@ -30,7 +30,7 @@ export function Todo({ addTodo, todos, deleteTodo, editTodo }: any) {
             </Box>
             <Counter todos={todos.length} />
             <Box sx={{ marginRight: 1 }}>
-              <AccountManagement />
+              <Avatar />
             </Box>
             <Box onClick={() => handleLogout()}>
               <Logout />

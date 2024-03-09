@@ -30,9 +30,11 @@ export function Login() {
     let serializedObj = JSON.stringify(user);
 
     axios
-      .post("http://localhost:3000/auth", {
-        username,
-        password,
+      .get("http://localhost:3000/users", {
+        params: {
+          username,
+          password,
+        },
       })
       .then((response) => {
         console.log("logged in successfully:", response.data);
