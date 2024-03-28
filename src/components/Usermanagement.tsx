@@ -32,30 +32,46 @@ export function Usermanagement() {
           backgroundColor: "white",
           borderRadius: 8,
           padding: 20,
-          marginTop: 20,
+          height: "40vh",
+          marginTop: 10,
           width: "300px",
           textAlign: "center",
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
           boxShadow: "0 0 10px rgba(0, 0, 0, 0.1)",
+          marginBottom: "100px",
         }}
       >
         <Box
           sx={{
             display: "flex",
             flexDirection: "column",
+            width: "80vh",
             alignItems: "center",
-            flexWrap: "nowrap",
+            marginRight: 8,
+            marginTop: -15,
           }}
         >
-          <TextField id="standard-basic" label="Vorname" variant="standard" />
-          <TextField id="standard-basic" label="nachname" variant="standard" />
+          <TextField id="standard-basic" label="Firstname" variant="standard" />
+          <TextField id="standard-basic" label="Lastname" variant="standard" />
           <FormControlLabel
+            sx={{ marginTop: 3, marginRight: 8 }}
             control={<Switch defaultChecked />}
             label="Dark Mode"
           />
-          <Button variant="contained">Upload</Button>
+          <Box
+            sx={{
+              marginLeft: 7,
+            }}
+          >
+            <Button sx={{ marginTop: 8, marginRight: 2 }} variant="contained">
+              Upload
+            </Button>
+            <Button sx={{ marginTop: 8 }} variant="contained">
+              Apply changes
+            </Button>
+          </Box>
         </Box>
       </Box>
     </Box>

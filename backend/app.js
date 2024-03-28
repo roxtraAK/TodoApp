@@ -31,16 +31,15 @@ app.post("/users", (req, res) => {
     });
 });
 
-app.get("/users", (req, res) => {
+app.get("/auth", (req, res) => {
   const { username, password } = req.query;
-  console.log(req.body);
   if (!username || !password) {
     return res.status(400).json({ error: 'username and password are required' });
   }
 
-  db.oneOrNone('SELECT username, password FROM users WHERE username = $1 AND password = $2', [username, password])
+  db.oneOrNone('SELECT username, password, firstname, lastname FROM users WHERE username = $1 AND password = $2', [username, password])
     .then((user) => {
-      if (user) {
+      if (user) { 
         res.status(200).json({ message: 'User found', user });
       } else {
         res.status(404).json({ message: 'User not found' });

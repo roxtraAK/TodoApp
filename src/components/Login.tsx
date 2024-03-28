@@ -22,25 +22,21 @@ export function Login() {
   };
 
   const handleLogin = () => {
-    const user = {
-      user: username,
-      password: password,
-    };
-
-    let serializedObj = JSON.stringify(user);
-
     axios
-      .get("http://localhost:3000/users", {
+      .get("http://localhost:3000/auth", {
         params: {
           username,
           password,
         },
       })
       .then((response) => {
+        if (
+          username == response.data.username &&
+          password == response.data.password
+        ) {
+        }
         console.log("logged in successfully:", response.data);
-
-        // save user in local storage
-        localStorage.setItem("user", serializedObj);
+        localStorage.setItem("user", JSON.stringify(response.data.user));
 
         navigate("/todos");
       })

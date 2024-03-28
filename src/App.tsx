@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Todo } from "./components/Todo";
 import { Login } from "./components/Login";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import React from "react";
 import { RegisterPage } from "./components/RegisterPage";
 import { Usermanagement } from "./components/Usermanagement";
 

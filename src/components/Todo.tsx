@@ -1,18 +1,32 @@
-import { useState } from "react";
 import styles from "../styles/todos.module.css";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import Counter from "./Counter";
 import { Logout } from "./Logout";
 import { Box } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import { Avatar } from "./Avatar";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 export function Todo({ addTodo, todos, deleteTodo, editTodo }: any) {
   const [input, setInput] = useState<string>("");
+  const [userData, setUserData] = useState<{
+    username: string;
+    firstname: string;
+    lastname: string;
+  }>({ username: "", firstname: "", lastname: "" });
   const navigate = useNavigate();
 
-  const handleOnChange = (e: any) => {
+  useEffect(() => {
+    console.log("useeffect called");
+    const _userData = localStorage.getItem("user");
+
+    if (_userData) {
+      setUserData(JSON.parse(_userData));
+    }
+  }, []);
+
+  const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInput(e.target.value);
   };
 
@@ -30,9 +44,12 @@ export function Todo({ addTodo, todos, deleteTodo, editTodo }: any) {
             </Box>
             <Counter todos={todos.length} />
             <Box sx={{ marginRight: 1 }}>
-              <Avatar />
+              <Avatar
+                firstName={userData.firstname}
+                lastName={userData.lastname}
+              />
             </Box>
-            <Box onClick={() => handleLogout()}>
+            <Box onClick={handleLogout}>
               <Logout />
             </Box>
           </Box>
@@ -41,26 +58,24 @@ export function Todo({ addTodo, todos, deleteTodo, editTodo }: any) {
             value={input}
             onChange={handleOnChange}
             type="text"
-          ></input>
+          />
           <button onClick={() => addTodo(input)} className={styles.todoButton}>
             Add Todo
           </button>
           {todos.map((todo: string, index: number) => (
-            <>
-              <Box className={styles.TodoContent}>
-                {todo}
-                <Box className={styles.icons}>
-                  <Box onClick={() => deleteTodo(index)}>
-                    <DeleteIcon
-                      sx={{ display: "flex", marginTop: 0.5, marginRight: 0.5 }}
-                    />
-                  </Box>
-                  <Box onClick={() => editTodo(index)}>
-                    <EditIcon sx={{ display: "flex", marginTop: 0.5 }} />
-                  </Box>
+            <Box key={index} className={styles.TodoContent}>
+              {todo}
+              <Box className={styles.icons}>
+                <Box onClick={() => deleteTodo(index)}>
+                  <DeleteIcon
+                    sx={{ display: "flex", marginTop: 0.5, marginRight: 0.5 }}
+                  />
+                </Box>
+                <Box onClick={() => editTodo(index)}>
+                  <EditIcon sx={{ display: "flex", marginTop: 0.5 }} />
                 </Box>
               </Box>
-            </>
+            </Box>
           ))}
         </Box>
       </Box>
