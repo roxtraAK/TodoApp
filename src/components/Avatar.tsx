@@ -2,6 +2,14 @@ import { Avatar as MuiAvatar, SxProps, Theme, Tooltip } from "@mui/material";
 import Box from "@mui/material/Box";
 import { useNavigate } from "react-router-dom";
 
+interface UserInfo {
+  username: string;
+  firstName: string;
+  lastName: string;
+  firstInitial: string;
+  lastInitial: string;
+}
+
 interface AvatarProps {
   firstName: string;
   lastName: string;
@@ -14,27 +22,33 @@ export function Avatar({ firstName, lastName }: AvatarProps) {
     navigate("/account");
   };
 
-  let username = firstName + " " + lastName;
-  let firstInitial = firstName![0].toUpperCase();
-  let lastInitial = lastName![0].toUpperCase();
+  const user = validateUserInfo(firstName, lastName);
 
   const sxPropsContent: SxProps<Theme> = {
     fontSize: 12,
     height: 27,
     width: 27,
-    bgcolor: stringToColor(username),
+    bgcolor: stringToColor(user.username),
   };
 
   return (
     <Box>
       <Tooltip title="Account">
         <MuiAvatar onClick={openUsermanagement} sx={sxPropsContent}>
-          {firstInitial}
-          {lastInitial}
+          {user.firstInitial.toUpperCase()}
+          {user.lastInitial.toUpperCase()}
         </MuiAvatar>
       </Tooltip>
     </Box>
   );
+}
+
+function validateUserInfo(firstName: string, lastName: string): UserInfo {
+  let username = firstName + " " + lastName;
+  let firstInitial = firstName[0]?.toUpperCase() ?? "";
+  let lastInitial = lastName[0]?.toUpperCase() ?? "";
+
+  return { username, firstInitial, lastInitial, firstName, lastName };
 }
 
 function stringToColor(string: string) {

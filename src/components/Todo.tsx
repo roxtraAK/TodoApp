@@ -18,7 +18,6 @@ export function Todo({ addTodo, todos, deleteTodo, editTodo }: any) {
   const navigate = useNavigate();
 
   useEffect(() => {
-    console.log("useeffect called");
     const _userData = localStorage.getItem("user");
 
     if (_userData) {
