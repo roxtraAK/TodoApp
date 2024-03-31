@@ -3,6 +3,7 @@ import axios from "axios";
 import styles from "../styles/register.module.css";
 import { useState } from "react";
 import CheckIcon from "@mui/icons-material/Check";
+import { createHash } from "crypto";
 import { useNavigate } from "react-router-dom";
 
 const sxPropsContent: SxProps<Theme> = {
@@ -59,6 +60,7 @@ export function RegisterPage() {
 
   const onRegister = () => {
     if (!password || !confirmPassword) {
+      //TODO: Change to Alert
       console.error("Password and Confirm Password cannot be empty");
       <Alert icon={<CheckIcon fontSize="inherit" />} severity="error">
         Password and Confirm Password cannot be empty
@@ -67,6 +69,7 @@ export function RegisterPage() {
     }
 
     if (password !== confirmPassword) {
+      //TODO: Change to Alert
       console.error("Passwords do not match");
       return;
     }
