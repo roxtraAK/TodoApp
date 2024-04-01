@@ -70,7 +70,7 @@ export function RegisterPage() {
 
     if (password !== confirmPassword) {
       //TODO: Change to Alert
-      console.error("Passwords do not match");
+      alert("Passwords do not match");
       return;
     }
 

@@ -30,20 +30,17 @@ export function Login() {
         },
       })
       .then((response) => {
-        if (
-          username == response.data.username &&
-          password == response.data.password
-        ) {
+        if (response.data.authenticated) {
+          console.log("logged in successfully:", response.data);
+          localStorage.setItem("user", JSON.stringify(response.data.user));
+          navigate("/todos");
+        } else {
+          alert("Benutzername oder Passwort ist falsch");
         }
-        console.log("logged in successfully:", response.data);
-        localStorage.setItem("user", JSON.stringify(response.data.user));
-
-        navigate("/todos");
       })
       .catch((error) => {
-        console.error("user not found:", error.response.data);
-        alert("User not found");
-        return;
+        console.error("Failed to login" + error.message);
+        alert("Fehler beim Einloggen");
       });
   };
 
