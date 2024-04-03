@@ -1,13 +1,14 @@
 import axios from "axios";
 
 export interface IUser {
+    user_id: number;
     firstname: string;
     lastname: string;
     username?: string;
     password?: string;
 }
 
-export async function getUserProfile(username: string, password: string): Promise<IUser|undefined> {
+export async function getUserData(username: string, password: string): Promise<IUser|undefined> {
     try {
         const response = await axios.get(`http://localhost:3000/auth?username=${username}?password=${password}`);
         const userData = response.data;

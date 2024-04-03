@@ -4,7 +4,6 @@ var pgp = require("pg-promise")(/*options*/);
 var db = pgp("postgres://postgres:admin@localhost:5432/Todo");
 var cors = require('cors')
 const bodyParser = require('body-parser');
-const _crypto = require('crypto');
 
 const port = 3000
 const app = express();
@@ -35,20 +34,21 @@ app.post("/users", (req, res) => {
       res.status(500).json({ error: 'Internal Server Error' });
     });
 });
+
 const crypto = require('crypto');
+
 app.get("/auth", (req, res) => {
   const { username, password } = req.query;
   if (!username || !password) {
     return res.status(400).json({ error: 'Benutzername und Passwort sind erforderlich' });
   }
 
-  db.oneOrNone('SELECT username, password, firstname, lastname FROM users WHERE username = $1', [username])
+  db.oneOrNone('SELECT user_id, username, password, firstname, lastname FROM users WHERE username = $1', [username])
     .then((user) => {
       if (user) {
-        // Überprüfe, ob das eingegebene Passwort mit dem in der Datenbank gespeicherten Passwort übereinstimmt
         const hashedPassword = crypto.createHash("sha256").update(password).digest("hex");
         if (hashedPassword === user.password) {
-          delete user.password; // Entferne das Passwort aus der Antwort
+          delete user.password; 
           res.status(200).json({ authenticated: true, user });
         } else {
           res.status(200).json({ authenticated: false });
@@ -63,12 +63,47 @@ app.get("/auth", (req, res) => {
     });
 });
 
+app.post('/users/:user_id/todos', (req, res) => {
+  const userId = parseInt(req.params.user_id);
+  const { text } = req.body;
 
+  if (!userId) {
+      return res.status(404).json({ error: 'User not Found' });
+  }
+  if (!text) {
+      return res.status(400).json({ error: 'Textfield should not be empty' });
+  }
 
+  db.none('INSERT INTO todos(user_id, todo) VALUES($1, $2)', [userId, text])
+    .then(() => {
+      res.status(201).json({ message: 'Neues ToDo hinzugefügt', todo: { text } });
+    })
+    .catch((error) => {
+      console.error('Error adding todo:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    });
+});
 
+app.delete('/users/:user_id/todos', (req, res) => {
+  const userId = parseInt(req.params.user_id);
+  const { text } = req.body;
 
+  if (!userId) {
+      return res.status(404).json({ error: 'User not Found' });
+  }
+  if (!text) {
+      return res.status(400).json({ error: 'Textfield should not be empty' });
+  }
 
-
+  db.none('INSERT INTO todos(user_id, todo) VALUES($1, $2)', [userId, text])
+    .then(() => {
+      res.status(201).json({ message: 'Neues ToDo hinzugefügt', todo: { text } });
+    })
+    .catch((error) => {
+      console.error('Error adding todo:', error);
+      res.status(500).json({ error: 'Internal Server Error' });
+    });
+});
 
 app.listen(3000, () => {
   console.log('Server is running on port 3000');

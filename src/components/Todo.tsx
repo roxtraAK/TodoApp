@@ -11,10 +11,11 @@ import { useEffect, useState } from "react";
 export function Todo({ addTodo, todos, deleteTodo, editTodo }: any) {
   const [input, setInput] = useState<string>("");
   const [userData, setUserData] = useState<{
+    user_id: number;
     username: string;
     firstname: string;
     lastname: string;
-  }>({ username: "", firstname: "", lastname: "" });
+  }>({ user_id: 0, username: "", firstname: "", lastname: "" });
   const navigate = useNavigate();
 
   useEffect(() => {

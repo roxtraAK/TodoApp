@@ -1,10 +1,13 @@
-import { Alert, Box, Button, SxProps, TextField, Theme } from "@mui/material";
+import { Box, Button, SxProps, TextField, Theme } from "@mui/material";
 import axios from "axios";
 import styles from "../styles/register.module.css";
 import { useState } from "react";
-import CheckIcon from "@mui/icons-material/Check";
-import { createHash } from "crypto";
 import { useNavigate } from "react-router-dom";
+import SimpleAlert from "./Notification";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../Redux/store";
+import { getUserData, updateUser } from "../Redux/user/userSlice";
+import { IUser } from "../API/Api";
 
 const sxPropsContent: SxProps<Theme> = {
   display: "flex",
@@ -19,6 +22,8 @@ const sxPropsContent: SxProps<Theme> = {
 };
 
 export function RegisterPage() {
+  const user = useSelector((state: RootState) => state.user);
+  const dispatch = useDispatch();
   const [firstname, setFirstname] = useState("");
   const [lastname, setLastname] = useState("");
   const [email, setEmail] = useState("");
@@ -62,9 +67,6 @@ export function RegisterPage() {
     if (!password || !confirmPassword) {
       //TODO: Change to Alert
       console.error("Password and Confirm Password cannot be empty");
-      <Alert icon={<CheckIcon fontSize="inherit" />} severity="error">
-        Password and Confirm Password cannot be empty
-      </Alert>;
       return;
     }
 
@@ -90,13 +92,7 @@ export function RegisterPage() {
         console.error("Error adding new user:", error.response.data);
       });
 
-    <Alert icon={<CheckIcon fontSize="inherit" />} severity="success">
-      Registration was successful.
-    </Alert>;
-
-    setTimeout(function () {
-      navigate("/");
-    }, 2000);
+    navigate("/");
   };
 
   return (
